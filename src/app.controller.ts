@@ -13,7 +13,7 @@ export class AppController {
 
   @Post('destination')
   @UseGuards(EcoloGuard)
-  travelTo(@Body() vehicle: string) {
+  travelTo(@Body('vehicle') vehicle: string) {
     return `Have a good trip with your ${vehicle}`;
   }
 }
