@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, SetMetadata, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { EcoloGuard } from './ecolo/ecolo.guard';
 
@@ -13,7 +13,9 @@ export class AppController {
 
   @Post('destination')
   @UseGuards(EcoloGuard)
+  @SetMetadata('greenVehicles', ['legs', 'bike', 'horse'])
   travelTo(@Body('vehicle') vehicle: string) {
+    console.log('inside travelTo')
     return `Have a good trip with your ${vehicle}`;
   }
 }

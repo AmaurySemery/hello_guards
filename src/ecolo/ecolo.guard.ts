@@ -1,13 +1,17 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class EcoloGuard implements CanActivate {
+  constructor(private readonly reflector: Reflector) { }
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
+    // context pour accéder à travelTo
+    const greenVehicles = this.reflector.get<string[]>('greenVehicles', context.getHandler());
     const req = context.switchToHttp().getRequest();
-    console.log('inside EcoloGuard / body', req.body);
+    console.log('EcoloGuard / greenVehicles', greenVehicles);
     if (req.body.vehicle !== 'bike') {
       return false;
     } else {
